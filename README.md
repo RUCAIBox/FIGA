@@ -1,5 +1,5 @@
 # FIGA
-This repository is the official implementation of ICLR 2024 paper: **Beyond Imitation: Leveraging Fine-grained Quality Signals for Alignment**. 
+This repository is the official implementation of ICLR 2024 paper: **[Beyond Imitation: Leveraging Fine-grained Quality Signals for Alignment](https://arxiv.org/pdf/2311.04072.pdf)**. 
 
 
 ## Quick Start
