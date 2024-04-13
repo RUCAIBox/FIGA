@@ -1,0 +1,9 @@
+transformer==4.28.1
+deepspeed==0.10.0
+Levenshtein
+accelerate
+typing
+wandb
+setuptools
+numpy
+tqdm
