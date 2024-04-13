@@ -50,10 +50,13 @@ outputs = model.generate(inputs, max_new_tokens=100, do_sample=True, top_k=50, t
 
 Please cite the following paper if you find our code or data helpful.
 
+```
 @article{guo2023beyond,
   title={Beyond imitation: Leveraging fine-grained quality signals for alignment},
   author={Guo, Geyang and Zhao, Ranchi and Tang, Tianyi and Zhao, Wayne Xin and Wen, Ji-Rong},
   journal={arXiv preprint arXiv:2311.04072},
   year={2023}
 }
+```
+
 
