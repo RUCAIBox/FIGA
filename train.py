@@ -9,6 +9,7 @@ import torch
 import transformers
 import json
 from accelerate.utils import set_seed
+from datasets import load_dataset
 
 set_seed(42)
 
@@ -51,6 +52,7 @@ class TrainingArguments(transformers.TrainingArguments):
         default=512,
         metadata={"help": "Maximum sequence length. Sequences will be right padded (and possibly truncated)."},
     )
+
 
 def _tokenize_fn(strings: Sequence[str], tokenizer: transformers.PreTrainedTokenizer) -> Dict:
     """Tokenize a list of strings."""
@@ -103,7 +105,7 @@ class SupervisedDataset(Dataset):
     def __init__(self, data_path: str, tokenizer: transformers.PreTrainedTokenizer, instruction_type: str):
         super(SupervisedDataset, self).__init__()
         logging.warning("Loading data...")
-        list_data_dict = json.load(open(data_path))
+        list_data_dict = load_dataset(data_path)['train']
 
         logging.warning("Formatting inputs...")
         if instruction_type == 'no_inst':
@@ -115,7 +117,7 @@ class SupervisedDataset(Dataset):
             for example in list_data_dict
         ]
         targets = [f"{example['revised_output']}{tokenizer.eos_token}" for example in list_data_dict]
-        raw = [f"{example['alpaca_original_output']}{tokenizer.eos_token}" for example in list_data_dict]
+        raw = [f"{example['original_output']}{tokenizer.eos_token}" for example in list_data_dict]
 
         logging.warning("Tokenizing inputs... This may take some time...")
         data_dict = preprocess(sources, targets, raw, tokenizer)
