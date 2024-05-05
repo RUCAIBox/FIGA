@@ -706,7 +706,7 @@ class LlamaForCausalLM(LlamaPreTrainedModel):
         logits = self.lm_head(hidden_states)
 
         loss = None
-        # FIGA changes below:
+        # FIGA and corresponding variants changes below:
         if labels is not None and my_mask is not None and delta is not None:  # delta weighted method
             shift_logits = logits[..., :-1, :].contiguous() #(B, S, V)
             shift_labels = labels[..., 1:].contiguous() #(B, S)
@@ -724,7 +724,7 @@ class LlamaForCausalLM(LlamaPreTrainedModel):
             loss = loss * delta
             loss = torch.sum(loss) / (torch.sum(my_mask == 1).item())
         
-        elif labels is not None and my_mask is not None and contra!=None:  # contra method
+        elif labels is not None and my_mask is not None and contra!=None:  # FIGA main method
             shift_logits = logits[..., :-1, :].contiguous() #(2B, S, V)
             shift_labels = labels[..., 1:].contiguous() #(2B, S)
             shift_logits = shift_logits.transpose(1, 2) #(2B, V, S)
@@ -733,9 +733,8 @@ class LlamaForCausalLM(LlamaPreTrainedModel):
             loss_fct = CrossEntropyLoss(reduction='none')
             ppl = loss_fct(shift_logits, shift_labels) # (2B, S)
             
-            threshold_upper = 1
             threshold_lower = 0.6
-            logits_mask = (ppl < threshold_lower) | (ppl > threshold_upper)
+            logits_mask = ppl > threshold_lower
             for idx, row in enumerate(my_mask):
                 for j, value in enumerate(row):
                     if value == -1 and logits_mask[idx][j]==1:
