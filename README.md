@@ -28,7 +28,7 @@ For our publicly available SPA dataset, the `output` field is the ground truth r
 After setting up the environment, you can utilize the FIGA method to fine-tune the model by referring to the code provided below:
 
 ```bash
-bash FIGA/bash/run_7b.sh > output.log 2>&1
+bash bash/run_7b.sh > output.log 2>&1
 ```
 
 ## Acknowledgment
