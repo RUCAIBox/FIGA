@@ -4,7 +4,7 @@ export CUDA_VISIBLE_DEVICES=0,1
 OUTPUT_DIR=/data/model/FIGA
 
 torchrun --nproc_per_node=2 --master_port=1234 train.py \
-    --model_name_or_path /path/to/alpaca-7b \
+    --model_name_or_path /path/to/your_model \
     --data_path RUCAIBox/SPA \
     --bf16 True \
     --output_dir $OUTPUT_DIR \
