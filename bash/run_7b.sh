@@ -5,7 +5,7 @@ OUTPUT_DIR=/data/model/FIGA
 
 torchrun --nproc_per_node=2 --master_port=1234 train.py \
     --model_name_or_path /path/to/alpaca-7b \
-    --data_path /path/to/SPA/data.json \
+    --data_path RUCAIBox/SPA \
     --bf16 True \
     --output_dir $OUTPUT_DIR \
     --num_train_epochs 5 \
